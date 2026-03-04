@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card mb-3">
+  <div class="card-header">
+    Buses
+  </div>
+  <div class="card-body">
+    <a class="btn btn-primary" href="{{ url_for("device.new_bus") }}">+ Add Bus</a>
+
+    <div class="mt-3">
+      {% include "components/device/_bus_list.html" with context %}
+    </div>
+  </div>
+</div>
+
+<div class="card mb-3">
+  <div class="card-header">
+    Devices
+  </div>
+  <div class="card-body">
+    <a class="btn btn-primary" href="{{ url_for("device.new_device") }}">+ Add Device</a>
+
+    <div class="mt-3">
+      {% include "components/device/_device_list.html" with context %}
+    </div>
+  </div>
+</div>
+{% endblock %}

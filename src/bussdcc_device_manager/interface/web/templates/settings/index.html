@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% import "bussdcc_framework/formtree/_formtree.jinja" as formtree %}
+
+{% block content %}
+<div class="card mb-3">
+  <div class="card-header">
+    Settings
+  </div>
+  <div class="card-body">
+    <form method="post" action="{{ action }}">
+      {{ formtree.render(tree) }}
+
+      <button class="btn btn-primary">Save</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

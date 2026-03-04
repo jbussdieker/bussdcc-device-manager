@@ -1,0 +1,63 @@
+[project]
+name = "bussdcc-device-manager"
+dynamic = [
+    "version",
+]
+dependencies = [
+    "bussdcc-system ~= 0.24.0",
+    "bussdcc-hardware ~= 0.24.0",
+]
+description = "bussdcc device manager"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+    { name = "Joshua B. Bussdieker", email = "jbussdieker@gmail.com" },
+]
+maintainers = [
+    { name = "Joshua B. Bussdieker", email = "jbussdieker@gmail.com" },
+]
+classifiers = [
+    "Framework :: Flask",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+    "Development Status :: 2 - Pre-Alpha",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Operating System :: OS Independent",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Typing :: Typed",
+]
+keywords = ["event-sourcing", "replay", "configuration", "deterministic"]
+license = "MIT"
+
+[project.scripts]
+bussdcc-device-manager = "bussdcc_device_manager.cli:main"
+
+[project.optional-dependencies]
+all = [
+    "bussdcc-hardware[usb_camera,nau7802]"
+]
+dev = [
+    "bussdcc-framework[dev]",
+    "bussdcc-hardware[dev]",
+]
+
+[project.urls]
+Homepage = "https://github.com/jbussdieker/bussdcc-device-manager"
+Documentation = "https://github.com/jbussdieker/bussdcc-device-manager/blob/main/README.md"
+Repository = "https://github.com/jbussdieker/bussdcc-device-manager"
+Issues = "https://github.com/jbussdieker/bussdcc-device-manager/issues"
+Changelog = "https://github.com/jbussdieker/bussdcc-device-manager/blob/main/CHANGELOG.md"
+
+[build-system]
+requires = [
+    "setuptools",
+    "setuptools-scm",
+]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+fallback_version = "0.0.0"
