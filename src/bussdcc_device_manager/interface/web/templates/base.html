@@ -7,6 +7,7 @@
 {% block scripts %}
   {{ super() }}
   {% include "bussdcc_framework/socketio/_socketio.html" %}
+  {% include "bussdcc_framework/client/_client.html" %}
   <script src="{{ url_for('bussdcc_framework_formtree.static', filename='formtree.js') }}"></script>
 {% endblock %}
 
