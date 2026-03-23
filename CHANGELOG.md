@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/jbussdieker/bussdcc-device-manager/compare/v0.1.0...v0.2.0) (2026-03-23)
+
+
+### Features
+
+* **device_manager:** update hardware dependency and improve config loading ([9eb359d](https://github.com/jbussdieker/bussdcc-device-manager/commit/9eb359dde883b1b22db3da6c435286b0fc204115))
+
 ## 0.1.0 (2026-03-23)
 
 
