@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/jbussdieker/bussdcc-device-manager/compare/v0.2.0...v0.3.0) (2026-03-23)
+
+
+### Features
+
+* **device_manager:** update dependencies and enhance client integration ([3d483d1](https://github.com/jbussdieker/bussdcc-device-manager/commit/3d483d16053b8ba3d40b609f28f1cdb465d5bdfe))
+
 ## [0.2.0](https://github.com/jbussdieker/bussdcc-device-manager/compare/v0.1.0...v0.2.0) (2026-03-23)
 
 
