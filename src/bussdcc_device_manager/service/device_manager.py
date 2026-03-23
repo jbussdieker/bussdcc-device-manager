@@ -8,6 +8,7 @@ from bussdcc import (
     RuntimeProtocol,
     DeviceProtocol,
 )
+from bussdcc_framework.codec import load_value
 from bussdcc_hardware.registry import registry
 
 from .. import message
@@ -66,7 +67,7 @@ class DeviceManagerService(Service):
             if not definition:
                 continue
 
-            cfg = definition.config_class.from_dict(spec["config"])
+            cfg = load_value(definition.config_class, spec["config"])
 
             desired[device_id] = definition.driver_class(id=device_id, config=cfg)
 
