@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field, replace
-from typing import Any, Optional
 
 from .settings import Settings
+from .device import DeviceSpec
 
 
 @dataclass(slots=True, frozen=True)
@@ -13,7 +13,7 @@ class Config:
             "required": True,
         }
     )
-    devices: Optional[dict[str, Any]] = field(
+    devices: dict[str, DeviceSpec] = field(
         default_factory=dict,
         metadata={
             "label": "Devices",

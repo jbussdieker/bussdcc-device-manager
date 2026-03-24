@@ -7,6 +7,7 @@ from bussdcc_framework.interface.web import formtree
 from bussdcc_hardware.registry import registry
 
 from .... import message
+from ....config.device import DeviceSpec
 
 bp = Blueprint("device", __name__, url_prefix="/device")
 
@@ -49,12 +50,21 @@ def new() -> Any:
 @bp.route("/show/<id>")
 def show(id: str) -> Any:
     ctx = current_ctx()
-    device = ctx.runtime.devices.get(id)
-    if not device:
-        flash("Device not found", "warning")
-        return redirect(url_for("index"))
+    cfg = ctx.state.get("config")
+    spec = cfg.devices.get(id)
 
-    tree = formtree.build(device.config)
+    if spec is None:
+        flash("Device not found", "warning")
+        return redirect(url_for("device.index"))
+
+    registry_entry = registry.devices.get(spec.type)
+    if registry_entry is None or registry_entry.definition is None:
+        flash("Device type not available", "warning")
+        return redirect(url_for("device.index"))
+
+    definition = registry_entry.definition
+    device_cfg = load_value(definition.config_class, spec.config)
+    tree = formtree.build(device_cfg)
 
     return render_template(
         "device/show.html",
@@ -71,13 +81,21 @@ def create(type_: str, name: str) -> Any:
     registry_entry = registry.devices[type_]
     definition = registry_entry.definition
     if definition is None:
-        flash("Bus not available", "warning")
+        flash("Device not available", "warning")
         return redirect(url_for("device.index"))
 
     tree = formtree.build(definition.config_class)
     data = formtree.unflatten(tree, request.form)
     cfg = load_value(definition.config_class, data)
-    ctx.emit(message.DeviceAdded(device=name, type_=type_, data=dump_value(cfg)))
+    ctx.emit(
+        message.DeviceAdded(
+            device=name,
+            spec=DeviceSpec(
+                type=type_,
+                config=dump_value(cfg),
+            ),
+        )
+    )
 
     return redirect(url_for("device.index"))
 
@@ -94,7 +112,12 @@ def update(id: str) -> Any:
     tree = formtree.build(device.config)
     data = formtree.unflatten(tree, request.form)
     cfg = load_value(type(device.config), data)
-    ctx.emit(message.DeviceConfigUpdate(device=id, data=dump_value(cfg)))
+    ctx.emit(
+        message.DeviceConfigUpdate(
+            device=id,
+            config=dump_value(cfg),
+        )
+    )
 
     return redirect(url_for("device.index"))
 

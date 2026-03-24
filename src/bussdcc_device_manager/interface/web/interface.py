@@ -1,14 +1,11 @@
 from typing import Any
 import secrets
 
-from flask import render_template, request, redirect, url_for
+from flask import request, redirect, url_for
 
 from bussdcc import ContextProtocol, Event, Message
 
 from bussdcc_framework.web import FlaskApp, WebInterface as Base
-from bussdcc_system import message as system_message
-
-from ... import message
 
 from .blueprints.settings import bp as settings_bp
 from .blueprints.device import bp as device_bp
@@ -45,4 +42,4 @@ class WebInterface(Base):
         app.register_blueprint(device_bp)
 
     def handle_event(self, ctx: ContextProtocol, evt: Event[Message]) -> None:
-        payload = evt.payload
+        pass

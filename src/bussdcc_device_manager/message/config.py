@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from bussdcc import Message
 
 from ..config import Config, Settings
+from ..config.device import DeviceSpec
 
 
 @dataclass(slots=True, frozen=True)
@@ -18,14 +19,13 @@ class ConfigUpdate(Message):
 @dataclass(slots=True, frozen=True)
 class DeviceAdded(Message):
     device: str
-    type_: str
-    data: dict[str, object]
+    spec: DeviceSpec
 
 
 @dataclass(slots=True, frozen=True)
 class DeviceConfigUpdate(Message):
     device: str
-    data: dict[str, object]
+    config: dict[str, object]
 
 
 @dataclass(slots=True, frozen=True)

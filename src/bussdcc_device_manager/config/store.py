@@ -1,11 +1,11 @@
 import json
-from typing import Optional
 from pathlib import Path
 
 from bussdcc_framework.codec import load_value, dump_value
 
 from .config import Config
 from .settings import Settings
+from .device import DeviceSpec
 
 
 class ConfigStore:
@@ -14,14 +14,19 @@ class ConfigStore:
             path = Path(path)
 
         self.path = path
-        self.data: Optional[Config] = None
+        self.data: Config | None = None
 
         if path.exists():
             raw = json.loads(path.read_text())
 
+            devices = {
+                device_id: DeviceSpec(**spec)
+                for device_id, spec in raw.get("devices", {}).items()
+            }
+
             self.data = Config(
                 settings=load_value(Settings, raw["settings"]),
-                devices=raw.get("devices", {}),
+                devices=devices,
             )
 
     def save(self) -> None:
@@ -29,4 +34,6 @@ class ConfigStore:
             return
 
         self.path.parent.mkdir(parents=True, exist_ok=True)
+
+        # dump_value will convert DeviceSpec correctly if codec supports dataclasses
         self.path.write_text(json.dumps(dump_value(self.data), indent=2))
