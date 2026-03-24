@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.4.0](https://github.com/jbussdieker/bussdcc-device-manager/compare/v0.3.0...v0.4.0) (2026-03-24)
+
+
+### Features
+
+* **device_manager:** enhance device management with new dependency handling ([6b8a87d](https://github.com/jbussdieker/bussdcc-device-manager/commit/6b8a87dad81432315734739732d9b3724672efc0))
+* **device_manager:** remove bus management functionality ([5573e01](https://github.com/jbussdieker/bussdcc-device-manager/commit/5573e018055816aebb7e96a363ec1be249d21bf0))
+* **device_manager:** update bussdcc-system dependency ([f8bef31](https://github.com/jbussdieker/bussdcc-device-manager/commit/f8bef315d183f8017bddfe8352ad9e434131fc66))
+
 ## [0.3.0](https://github.com/jbussdieker/bussdcc-device-manager/compare/v0.2.0...v0.3.0) (2026-03-23)
 
 
