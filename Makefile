@@ -34,7 +34,7 @@ clean:
 .venv/bin/twine: .venv/bin/python
 	.venv/bin/pip install twine
 .venv/bin/python:
-	python3 -m venv --system-site-packages .venv
+	python -m venv --system-site-packages .venv
 context:
 	@echo "# README.md"
 	@cat README.md
