@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.5.0](https://github.com/jbussdieker/bussdcc-device-manager/compare/v0.4.0...v0.5.0) (2026-03-24)
+
+
+### Features
+
+* **device_manager:** enhance device update and dependency management ([918c7fb](https://github.com/jbussdieker/bussdcc-device-manager/commit/918c7fb3facc407f65ab12204bbc3219ed0c2e11))
+
+
+### Bug Fixes
+
+* **device_manager:** handle missing dependencies in graph calculation ([09f68bb](https://github.com/jbussdieker/bussdcc-device-manager/commit/09f68bb67550cd6f18285fbed9bcc9dbde2192bd))
+
 ## [0.4.0](https://github.com/jbussdieker/bussdcc-device-manager/compare/v0.3.0...v0.4.0) (2026-03-24)
 
 
