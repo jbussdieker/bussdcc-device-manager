@@ -4,7 +4,7 @@
   {% endif %}
   {% for id, device in devices.items() %}
     <a
-      href="{{ url_for('device.show_device', id=id) }}"
+      href="{{ url_for('device.show', id=id) }}"
       class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
     >
       <div>

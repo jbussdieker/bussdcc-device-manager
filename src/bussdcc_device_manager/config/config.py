@@ -13,14 +13,6 @@ class Config:
             "required": True,
         }
     )
-    buses: Optional[dict[str, Any]] = field(
-        default_factory=dict,
-        metadata={
-            "label": "Buses",
-            "group": "Runtime",
-            "help": "Named bus registrations.",
-        },
-    )
     devices: Optional[dict[str, Any]] = field(
         default_factory=dict,
         metadata={

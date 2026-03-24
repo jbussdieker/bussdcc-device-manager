@@ -14,25 +14,6 @@ class ConfigProcess(Process):
         elif isinstance(evt.payload, message.ConfigUpdate):
             ctx.state.set("config", evt.payload.config)
             ctx.emit(message.ConfigChanged())
-        elif isinstance(evt.payload, message.BusAdded):
-            cfg = ctx.state.get("config")
-            cfg.buses[evt.payload.bus] = {
-                "type": evt.payload.type_,
-                "config": evt.payload.data,
-            }
-            ctx.emit(message.ConfigChanged())
-        elif isinstance(evt.payload, message.BusConfigUpdate):
-            cfg = ctx.state.get("config")
-            cfg.buses[evt.payload.bus]["config"] = evt.payload.data
-            ctx.emit(message.ConfigChanged())
-        elif isinstance(evt.payload, message.BusDeleted):
-            cfg = ctx.state.get("config")
-            if cfg is None:
-                return
-
-            if evt.payload.bus in cfg.buses:
-                del cfg.buses[evt.payload.bus]
-                ctx.emit(message.ConfigChanged())
         elif isinstance(evt.payload, message.DeviceAdded):
             cfg = ctx.state.get("config")
             cfg.devices[evt.payload.device] = {

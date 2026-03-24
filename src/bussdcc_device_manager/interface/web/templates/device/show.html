@@ -18,7 +18,7 @@
 
     <hr>
 
-    <form method="post" action="{{ url_for('device.delete_device', id=device_id) }}">
+    <form method="post" action="{{ url_for('device.delete', id=device_id) }}">
       <button
         class="btn btn-outline-danger"
         onclick="return confirm('Delete device {{ device_id }}?');">

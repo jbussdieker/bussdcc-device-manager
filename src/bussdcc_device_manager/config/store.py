@@ -21,7 +21,6 @@ class ConfigStore:
 
             self.data = Config(
                 settings=load_value(Settings, raw["settings"]),
-                buses=raw.get("buses", {}),
                 devices=raw.get("devices", {}),
             )
 

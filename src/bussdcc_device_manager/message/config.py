@@ -34,24 +34,6 @@ class DeviceDeleted(Message):
 
 
 @dataclass(slots=True, frozen=True)
-class BusAdded(Message):
-    bus: str
-    type_: str
-    data: dict[str, object]
-
-
-@dataclass(slots=True, frozen=True)
-class BusConfigUpdate(Message):
-    bus: str
-    data: dict[str, object]
-
-
-@dataclass(slots=True, frozen=True)
-class BusDeleted(Message):
-    bus: str
-
-
-@dataclass(slots=True, frozen=True)
 class SettingsUpdate(Message):
     settings: Settings
 
