@@ -22,8 +22,8 @@ class DeviceReconciler:
         dirty_ids = graph.initial_dirty_ids(runtime, desired_nodes)
         dirty_ids = graph.expand_dirty_ids(dirty_ids, dependents)
 
-        # detach deleted devices first
-        for dev_id in sorted(deleted_ids):
+        # detach deleted devices first in reverse dependency order
+        for dev_id in graph.deleted_detach_order(runtime, deleted_ids):
             try:
                 runtime.devices.detach(dev_id)
             except Exception:

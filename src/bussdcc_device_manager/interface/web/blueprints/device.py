@@ -103,19 +103,27 @@ def create(type_: str, name: str) -> Any:
 @bp.route("/update/<id>", methods=["POST"])
 def update(id: str) -> Any:
     ctx = current_ctx()
+    cfg = ctx.state.get("config")
+    spec = cfg.devices.get(id)
 
-    device = ctx.runtime.devices.get(id)
-    if not device:
+    if spec is None:
         flash("Device not found", "warning")
-        return redirect(url_for("index"))
+        return redirect(url_for("device.index"))
 
-    tree = formtree.build(device.config)
+    registry_entry = registry.devices.get(spec.type)
+    if registry_entry is None or registry_entry.definition is None:
+        flash("Device type not available", "warning")
+        return redirect(url_for("device.index"))
+
+    definition = registry_entry.definition
+    tree = formtree.build(definition.config_class)
     data = formtree.unflatten(tree, request.form)
-    cfg = load_value(type(device.config), data)
+    device_cfg = load_value(definition.config_class, data)
+
     ctx.emit(
         message.DeviceConfigUpdate(
             device=id,
-            config=dump_value(cfg),
+            config=dump_value(device_cfg),
         )
     )
 
@@ -125,9 +133,10 @@ def update(id: str) -> Any:
 @bp.route("/delete/<id>", methods=["POST"])
 def delete(id: str) -> Any:
     ctx = current_ctx()
+    cfg = ctx.state.get("config")
+    spec = cfg.devices.get(id)
 
-    device = ctx.runtime.devices.get(id)
-    if not device:
+    if spec is None:
         flash("Device not found", "warning")
         return redirect(url_for("device.index"))
 

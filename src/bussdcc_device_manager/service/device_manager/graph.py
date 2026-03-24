@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Mapping
 from dataclasses import dataclass, fields, is_dataclass
 
 from bussdcc import RuntimeProtocol, DeviceProtocol
@@ -9,12 +9,16 @@ from ...config.device import DeviceSpec
 
 
 @dataclass(slots=True)
-class DeviceNode:
+class GraphNode:
     id: str
-    type_: str
-    spec: DeviceSpec
     device: DeviceProtocol[Any]
     deps: set[str]
+
+
+@dataclass(slots=True)
+class DeviceNode(GraphNode):
+    type_: str
+    spec: DeviceSpec
 
 
 def extract_dependencies(cfg: Any) -> set[str]:
@@ -53,7 +57,7 @@ def extract_dependencies(cfg: Any) -> set[str]:
     return deps
 
 
-def build_dependents(nodes: dict[str, DeviceNode]) -> dict[str, set[str]]:
+def build_dependents(nodes: Mapping[str, GraphNode]) -> dict[str, set[str]]:
     dependents: dict[str, set[str]] = {node_id: set() for node_id in nodes}
 
     for node_id, node in nodes.items():
@@ -64,7 +68,7 @@ def build_dependents(nodes: dict[str, DeviceNode]) -> dict[str, set[str]]:
     return dependents
 
 
-def topo_sort(nodes: dict[str, DeviceNode]) -> list[str]:
+def topo_sort(nodes: Mapping[str, GraphNode]) -> list[str]:
     in_degree: dict[str, int] = {node_id: 0 for node_id in nodes}
     dependents: dict[str, set[str]] = {node_id: set() for node_id in nodes}
 
@@ -95,7 +99,7 @@ def topo_sort(nodes: dict[str, DeviceNode]) -> list[str]:
 
 def initial_dirty_ids(
     runtime: RuntimeProtocol,
-    nodes: dict[str, DeviceNode],
+    nodes: Mapping[str, GraphNode],
 ) -> set[str]:
     actual = {d.id: d for d in runtime.devices.list()}
     dirty: set[str] = set()
@@ -119,7 +123,7 @@ def initial_dirty_ids(
 
 def expand_dirty_ids(
     dirty: set[str],
-    dependents: dict[str, set[str]],
+    dependents: Mapping[str, set[str]],
 ) -> set[str]:
     expanded = set(dirty)
     stack = list(dirty)
@@ -165,3 +169,29 @@ def build_desired_nodes(
         )
 
     return desired
+
+
+def build_actual_nodes(runtime: RuntimeProtocol) -> dict[str, GraphNode]:
+    actual: dict[str, GraphNode] = {}
+
+    for device in runtime.devices.list():
+        actual[device.id] = GraphNode(
+            id=device.id,
+            device=device,
+            deps=extract_dependencies(device.config),
+        )
+
+    return actual
+
+
+def deleted_detach_order(
+    runtime: RuntimeProtocol,
+    deleted_ids: set[str],
+) -> list[str]:
+    actual_nodes = build_actual_nodes(runtime)
+    deleted_nodes = {
+        node_id: node
+        for node_id, node in actual_nodes.items()
+        if node_id in deleted_ids
+    }
+    return list(reversed(topo_sort(deleted_nodes)))
