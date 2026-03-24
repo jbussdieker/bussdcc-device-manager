@@ -118,6 +118,14 @@ def initial_dirty_ids(
             dirty.add(node_id)
             continue
 
+        if any(dep not in nodes for dep in node.deps):
+            dirty.add(node_id)
+            continue
+
+        if any(dep not in actual for dep in node.deps):
+            dirty.add(node_id)
+            continue
+
     return dirty
 
 
