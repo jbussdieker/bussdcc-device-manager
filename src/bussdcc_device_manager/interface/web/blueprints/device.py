@@ -5,10 +5,11 @@ from bussdcc_framework.interface.web import current_ctx
 from bussdcc_framework.codec import load_value, dump_value
 from bussdcc_framework.interface.web import formtree
 from bussdcc_hardware.registry import registry
+from bussdcc_system.service.device_manager.graph import extract_dependencies
+from bussdcc_system.model import DeviceSpec
 
+from bussdcc_system import message as system_message
 from .... import message
-from ....config.device import DeviceSpec
-from ....service.device_manager.graph import extract_dependencies
 
 bp = Blueprint("device", __name__, url_prefix="/device")
 
@@ -16,8 +17,7 @@ bp = Blueprint("device", __name__, url_prefix="/device")
 @bp.route("/")
 def index() -> Any:
     ctx = current_ctx()
-    cfg = ctx.state.get("config")
-    devices = cfg.devices
+    devices = ctx.state.get("devices", {})
 
     runtime_devices = {dev.id: dev for dev in ctx.runtime.devices.list()}
     online_status = {dev.id: dev.online for dev in runtime_devices.values()}
@@ -101,8 +101,8 @@ def new() -> Any:
 @bp.route("/show/<id>")
 def show(id: str) -> Any:
     ctx = current_ctx()
-    cfg = ctx.state.get("config")
-    spec = cfg.devices.get(id)
+    devices = ctx.state.get("devices", {})
+    spec = devices.get(id)
 
     if spec is None:
         flash("Device not found", "warning")
@@ -139,7 +139,7 @@ def create(type_: str, name: str) -> Any:
     data = formtree.unflatten(tree, request.form)
     cfg = load_value(definition.config_class, data)
     ctx.emit(
-        message.DeviceAdded(
+        system_message.DeviceAdded(
             device=name,
             spec=DeviceSpec(
                 type=type_,
@@ -154,8 +154,8 @@ def create(type_: str, name: str) -> Any:
 @bp.route("/update/<id>", methods=["POST"])
 def update(id: str) -> Any:
     ctx = current_ctx()
-    cfg = ctx.state.get("config")
-    spec = cfg.devices.get(id)
+    devices = ctx.state.get("devices", {})
+    spec = devices.get(id)
 
     if spec is None:
         flash("Device not found", "warning")
@@ -183,7 +183,7 @@ def update(id: str) -> Any:
     device_cfg = load_value(definition.config_class, data)
 
     ctx.emit(
-        message.DeviceConfigUpdate(
+        system_message.DeviceConfigUpdate(
             device=id,
             config=dump_value(device_cfg),
         )
@@ -196,14 +196,14 @@ def update(id: str) -> Any:
 @bp.route("/delete/<id>", methods=["POST"])
 def delete(id: str) -> Any:
     ctx = current_ctx()
-    cfg = ctx.state.get("config")
-    spec = cfg.devices.get(id)
+    devices = ctx.state.get("devices", {})
+    spec = devices.get(id)
 
     if spec is None:
         flash("Device not found", "warning")
         return redirect(url_for("device.index"))
 
-    ctx.emit(message.DeviceDeleted(device=id))
+    ctx.emit(system_message.DeviceDeleted(device=id))
     flash(f"Deleted device '{id}'", "success")
 
     return redirect(url_for("device.index"))

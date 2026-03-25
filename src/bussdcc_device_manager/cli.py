@@ -3,6 +3,7 @@ import click
 from bussdcc_framework import Runtime, ReplayRuntime
 from bussdcc_framework.io import ConsoleSink, JsonlSink, JsonlSource
 from bussdcc_system import process as system_process, service as system_service
+from bussdcc_system.service.device_manager import DeviceManagerService
 
 from . import process, service, interface
 
@@ -54,11 +55,12 @@ def run(
         )
 
     runtime.processes.register(system_process.SystemIdentityProcess())
-    runtime.processes.register(process.ConfigProcess())
+    runtime.processes.register(system_process.DeviceManagerProcess())
+    runtime.processes.register(process.SettingsProcess())
 
     runtime.services.register(system_service.SystemIdentityService())
+    runtime.services.register(DeviceManagerService())
     runtime.services.register(service.ConfigService(data_dir))
-    runtime.services.register(service.DeviceManagerService())
 
     if web:
         runtime.interfaces.register(
@@ -91,7 +93,8 @@ def replay(
     runtime.add_sink(ConsoleSink())
 
     runtime.processes.register(system_process.SystemIdentityProcess())
-    runtime.processes.register(process.ConfigProcess())
+    runtime.processes.register(system_process.DeviceManagerProcess())
+    runtime.processes.register(process.SettingsProcess())
 
     if web:
         runtime.interfaces.register(

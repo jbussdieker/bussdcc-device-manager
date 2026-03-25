@@ -1,6 +1,7 @@
 from bussdcc import Service, ContextProtocol, Event, Message
+from bussdcc_system import message as system_message
 
-from ..config import ConfigStore
+from ..config import ConfigStore, Config
 from .. import message
 
 
@@ -11,11 +12,16 @@ class ConfigService(Service):
         self._data_dir = data_dir
 
     def _save_config(self, ctx: ContextProtocol) -> None:
-        cfg = ctx.state.get("config")
-        if cfg is None:
+        settings = ctx.state.get("settings")
+        devices = ctx.state.get("devices", {})
+
+        if settings is None:
             return
 
-        self.cs.data = cfg
+        self.cs.data = Config(
+            settings=settings,
+            devices=devices,
+        )
         self.cs.save()
 
         ctx.emit(message.ConfigSaved())
@@ -25,10 +31,25 @@ class ConfigService(Service):
         if self.cs.data is None:
             return
 
-        ctx.emit(message.ConfigInitialized(self.cs.data))
+        ctx.emit(message.SettingsReplaced(self.cs.data.settings))
+        ctx.emit(system_message.DevicesReplaced(self.cs.data.devices))
 
     def handle_event(self, ctx: ContextProtocol, evt: Event[Message]) -> None:
-        if isinstance(evt.payload, message.ConfigChanged):
+        payload = evt.payload
+
+        if isinstance(payload, message.ConfigChanged):
+            self._save_config(ctx)
+            return
+
+        if isinstance(
+            payload,
+            (
+                system_message.DevicesReplaced,
+                system_message.DeviceAdded,
+                system_message.DeviceConfigUpdate,
+                system_message.DeviceDeleted,
+            ),
+        ):
             self._save_config(ctx)
 
     def stop(self, ctx: ContextProtocol) -> None:

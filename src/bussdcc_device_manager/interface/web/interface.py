@@ -21,8 +21,8 @@ class WebInterface(Base):
 
         @app.before_request
         def initial_configuration() -> Any:
-            cfg = ctx.state.get("config")
-            if cfg is not None and cfg.settings is not None:
+            settings = ctx.state.get("settings")
+            if settings is not None:
                 return
 
             allowed_endpoints = {
@@ -41,7 +41,8 @@ class WebInterface(Base):
             config = ctx.state.get("config")
 
             return dict(
-                config=config,
+                settings=ctx.state.get("settings"),
+                devices=ctx.state.get("devices", {}),
                 ri=ctx.state.get("runtime_info", {}),
             )
 

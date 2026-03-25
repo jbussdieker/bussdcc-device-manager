@@ -2,10 +2,10 @@ import json
 from pathlib import Path
 
 from bussdcc_framework.codec import load_value, dump_value
+from bussdcc_system.model import DeviceSpec
 
 from .config import Config
 from .settings import Settings
-from .device import DeviceSpec
 
 
 class ConfigStore:

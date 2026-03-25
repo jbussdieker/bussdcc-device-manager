@@ -4,8 +4,7 @@ dynamic = [
     "version",
 ]
 dependencies = [
-    "bussdcc-system ~= 0.29.0",
-    "bussdcc-hardware ~= 0.28.0",
+    "bussdcc-system[hardware] ~= 0.30.0",
 ]
 description = "bussdcc device manager"
 readme = "README.md"

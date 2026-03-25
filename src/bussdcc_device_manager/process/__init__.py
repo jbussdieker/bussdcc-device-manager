@@ -1,5 +1,5 @@
-from .config import ConfigProcess
+from .settings import SettingsProcess
 
 __all__ = [
-    "ConfigProcess",
+    "SettingsProcess",
 ]

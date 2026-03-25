@@ -1,7 +1,8 @@
 from dataclasses import dataclass, field, replace
 
+from bussdcc_system.model import DeviceSpec
+
 from .settings import Settings
-from .device import DeviceSpec
 
 
 @dataclass(slots=True, frozen=True)

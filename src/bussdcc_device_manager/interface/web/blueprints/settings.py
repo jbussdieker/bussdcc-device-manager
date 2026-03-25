@@ -14,8 +14,11 @@ bp = Blueprint("settings", __name__, url_prefix="/settings")
 @bp.route("/")
 def index() -> Any:
     ctx = current_ctx()
-    cfg = ctx.state.get("config")
-    tree = formtree.build(cfg.settings)
+    settings = ctx.state.get("settings")
+    if settings is None:
+        return redirect(url_for("settings.new"))
+
+    tree = formtree.build(settings)
     return render_template(
         "settings/index.html",
         tree=tree,
