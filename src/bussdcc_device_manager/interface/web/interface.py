@@ -25,7 +25,14 @@ class WebInterface(Base):
             if cfg is not None and cfg.settings is not None:
                 return
 
-            allowed_endpoints = {"settings.new", "settings.update", "static"}
+            allowed_endpoints = {
+                "settings.new",
+                "settings.update",
+                "bussdcc_framework_bootstrap.static",
+                "bussdcc_framework_formtree.static",
+                "bussdcc_framework_client.static",
+                "bussdcc_framework_socketio.static",
+            }
             if request.endpoint not in allowed_endpoints:
                 return redirect(url_for("settings.new"))
 
