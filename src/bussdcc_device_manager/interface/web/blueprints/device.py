@@ -168,6 +168,17 @@ def update(id: str) -> Any:
 
     definition = registry_entry.definition
     tree = formtree.build(definition.config_class)
+    tree = formtree.validate(tree, request.form)
+
+    if tree.errors > 0:
+        return render_template(
+            "device/show.html",
+            id=id,
+            spec=spec,
+            definition=definition,
+            tree=tree,
+        )
+
     data = formtree.unflatten(tree, request.form)
     device_cfg = load_value(definition.config_class, data)
 
@@ -178,6 +189,7 @@ def update(id: str) -> Any:
         )
     )
 
+    flash("Device updated", "success")
     return redirect(url_for("device.index"))
 
 
