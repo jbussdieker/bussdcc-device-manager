@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/jbussdieker/bussdcc-device-manager/compare/v0.6.0...v0.7.0) (2026-03-25)
+
+
+### Features
+
+* **dependencies, interface:** update bussdcc-system version and adjust template path ([a34123c](https://github.com/jbussdieker/bussdcc-device-manager/commit/a34123c3aa10179a3f131f624b39bd6238005c26))
+
 ## [0.6.0](https://github.com/jbussdieker/bussdcc-device-manager/compare/v0.5.0...v0.6.0) (2026-03-25)
 
 
