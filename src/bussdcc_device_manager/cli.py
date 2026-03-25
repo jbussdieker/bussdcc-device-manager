@@ -11,7 +11,6 @@ from .version import __version__
 PLUGINS = [
     "client",
     "bootstrap",
-    "bootstrap-layout",
     "socketio",
     "formtree",
 ]
