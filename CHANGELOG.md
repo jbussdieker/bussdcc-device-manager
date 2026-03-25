@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.8.0](https://github.com/jbussdieker/bussdcc-device-manager/compare/v0.7.0...v0.8.0) (2026-03-25)
+
+
+### Features
+
+* **config, interface:** refactor device management and settings handling ([7a055c1](https://github.com/jbussdieker/bussdcc-device-manager/commit/7a055c1c87c7c1748e524c09833e4ff989b41445))
+* **interface, dependencies:** update dependencies and enhance device update flow ([567be0a](https://github.com/jbussdieker/bussdcc-device-manager/commit/567be0a35a511cb35c14364650c542cbb6434e70))
+* **interface:** enhance settings update with form validation ([26a223f](https://github.com/jbussdieker/bussdcc-device-manager/commit/26a223f2ccb71ecfc058f556811d668ce2cc7dbe))
+* **interface:** expand allowed endpoints for web interface ([12fa845](https://github.com/jbussdieker/bussdcc-device-manager/commit/12fa8451cd59e246549d8810055cad3fd1ba88a6))
+
 ## [0.7.0](https://github.com/jbussdieker/bussdcc-device-manager/compare/v0.6.0...v0.7.0) (2026-03-25)
 
 
