@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.6.0](https://github.com/jbussdieker/bussdcc-device-manager/compare/v0.5.0...v0.6.0) (2026-03-25)
+
+
+### Features
+
+* **dependencies:** update bussdcc-hardware version and optional dependencies ([d4be863](https://github.com/jbussdieker/bussdcc-device-manager/commit/d4be863198c0228e0e738ff25ba4962e7472ef61))
+* **device_manager/web:** enhance device dependency visualization ([4c1a0b7](https://github.com/jbussdieker/bussdcc-device-manager/commit/4c1a0b78281f2fe03f3e0018dabf79f5f0d1ecf5))
+
 ## [0.5.0](https://github.com/jbussdieker/bussdcc-device-manager/compare/v0.4.0...v0.5.0) (2026-03-24)
 
 
