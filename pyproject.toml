@@ -5,7 +5,7 @@ dynamic = [
 ]
 dependencies = [
     "bussdcc-system ~= 0.27.0",
-    "bussdcc-hardware ~= 0.26.0",
+    "bussdcc-hardware ~= 0.27.0",
 ]
 description = "bussdcc device manager"
 readme = "README.md"
@@ -38,7 +38,7 @@ bussdcc-device-manager = "bussdcc_device_manager.cli:main"
 
 [project.optional-dependencies]
 all = [
-    "bussdcc-hardware[usb_camera,nau7802]"
+    "bussdcc-hardware[usb_camera,nau7802,bme688]"
 ]
 dev = [
     "bussdcc-framework[dev]",
