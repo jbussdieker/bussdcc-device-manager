@@ -37,6 +37,14 @@ def new() -> Any:
 def update() -> Any:
     ctx = current_ctx()
     tree = formtree.build(config.Settings)
+    tree = formtree.validate(tree, request.form)
+    if tree.errors > 0:
+        return render_template(
+            "settings/index.html",
+            tree=tree,
+            action=url_for("settings.update"),
+        )
+
     data = formtree.unflatten(tree, request.form)
     cfg = load_value(config.Settings, data).normalized()
     ctx.emit(message.SettingsUpdate(settings=cfg))
