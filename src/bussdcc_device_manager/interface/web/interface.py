@@ -8,7 +8,6 @@ from bussdcc import ContextProtocol, Event, Message
 from bussdcc_framework.web import FlaskApp, WebInterface as Base
 
 from .blueprints.settings import bp as settings_bp
-from .blueprints.device import bp as device_bp
 
 
 class WebInterface(Base):
@@ -17,7 +16,7 @@ class WebInterface(Base):
 
         @app.route("/")
         def index() -> Any:
-            return redirect(url_for("device.index"))
+            return redirect(url_for("bussdcc_system_devices.index"))
 
         @app.before_request
         def initial_configuration() -> Any:
@@ -42,12 +41,10 @@ class WebInterface(Base):
 
             return dict(
                 settings=ctx.state.get("settings"),
-                devices=ctx.state.get("devices", {}),
                 ri=ctx.state.get("runtime_info", {}),
             )
 
         app.register_blueprint(settings_bp)
-        app.register_blueprint(device_bp)
 
     def handle_event(self, ctx: ContextProtocol, evt: Event[Message]) -> None:
         pass

@@ -14,6 +14,7 @@ PLUGINS = [
     "bootstrap",
     "socketio",
     "formtree",
+    "system-devices",
 ]
 
 
