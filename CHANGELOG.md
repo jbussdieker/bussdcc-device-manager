@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.0](https://github.com/jbussdieker/bussdcc-device-manager/compare/v0.9.0...v0.10.0) (2026-03-26)
+
+
+### Features
+
+* **cli, dependencies:** update dependency and modify replay function ([a3f9be6](https://github.com/jbussdieker/bussdcc-device-manager/commit/a3f9be692e9e6899f7b94d5f9b80507857925df4))
+
 ## [0.9.0](https://github.com/jbussdieker/bussdcc-device-manager/compare/v0.8.0...v0.9.0) (2026-03-26)
 
 
