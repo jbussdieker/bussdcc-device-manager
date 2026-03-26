@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.0](https://github.com/jbussdieker/bussdcc-device-manager/compare/v0.8.0...v0.9.0) (2026-03-26)
+
+
+### Features
+
+* **interface, dependencies:** move device management web interface to plugin ([80d52e4](https://github.com/jbussdieker/bussdcc-device-manager/commit/80d52e4540cc840cfeafa0b57504abf8d9b94fba))
+
 ## [0.8.0](https://github.com/jbussdieker/bussdcc-device-manager/compare/v0.7.0...v0.8.0) (2026-03-25)
 
 
